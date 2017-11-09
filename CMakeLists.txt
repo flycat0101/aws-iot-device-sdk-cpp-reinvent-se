@@ -173,6 +173,8 @@ add_subdirectory(samples/sensor EXCLUDE_FROM_ALL)
 
 add_subdirectory(samples/actuator EXCLUDE_FROM_ALL)
 
+add_subdirectory(samples/IntxLatency EXCLUDE_FROM_ALL)
+
 ##################################
 # Section: Define Install Target #
 ##################################
