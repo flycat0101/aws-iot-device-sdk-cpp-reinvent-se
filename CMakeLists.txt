@@ -169,6 +169,10 @@ add_subdirectory(samples/StoryRobotArm EXCLUDE_FROM_ALL)
 
 add_subdirectory(samples/StorySwitch EXCLUDE_FROM_ALL)
 
+add_subdirectory(samples/sensor EXCLUDE_FROM_ALL)
+
+add_subdirectory(samples/actuator EXCLUDE_FROM_ALL)
+
 ##################################
 # Section: Define Install Target #
 ##################################
