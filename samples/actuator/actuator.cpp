@@ -53,10 +53,10 @@
 
 #define SHADOW_MYSTATE_VALUE_ON "on"
 #define SHADOW_MYSTATE_VALUE_OFF "off"
-#define SHADOW_MYSTATE_VALUE_RED_F "red+f"
+#define SHADOW_MYSTATE_VALUE_RED_F "fan"
 #define SHADOW_MYSTATE_VALUE_RED "red"
 #define SHADOW_MYSTATE_VALUE_BLUE "blue"
-#define SHADOW_MYSTATE_VALUE_BLUE_H "blue+h"
+#define SHADOW_MYSTATE_VALUE_BLUE_H "heater"
 #define SHADOW_MYSTATE_VALUE_GREEN "green"
 #define SHADOW_MYSTATE_VALUE_TEMP "temp"
 
@@ -336,6 +336,11 @@ namespace awsiotsdk {
                     return rc;
                 }
 
+		char cmd[1024];
+		printf("set default target temperature: 300\n");
+		sprintf(cmd, "temperature -w 320:280");
+		system(cmd);
+
                 //Sleep for 1 second and wait for all messages to be received
                 std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
@@ -375,11 +380,15 @@ namespace awsiotsdk {
                                 util::String payload;
 				char cmd_light[128];
 				char cmd_temp[128];
+				memset(cmd_light, 0x00, sizeof(cmd_light));
+				memset(cmd_temp, 0x00, sizeof(cmd_temp));
                                 if (currentState.compare(SHADOW_MYSTATE_VALUE_RED_F) == 0) {
                                     val.SetString(SHADOW_MYSTATE_VALUE_RED_F);
-                                    payload = "{\"state\": \"red+f\"}";
+                                    payload = "{\"state\": \"red+fan\"}";
 					// set light to red
 					// stop heater and start fan
+					printf("temperature too high, stop heater and start fan\n");
+					printf("turn light to red\n");
 					sprintf(cmd_light, "light_control.sh red");
 					system(cmd_light);
 					sprintf(cmd_temp, "temperature -h 0"); //stop heater
@@ -391,6 +400,7 @@ namespace awsiotsdk {
                                     val.SetString(SHADOW_MYSTATE_VALUE_RED);
                                     payload = "{\"state\": \"red\"}";
 					// set light to red
+					printf("turn light to red\n");
 					sprintf(cmd_light, "light_control.sh red");
 					system(cmd_light);
 
@@ -398,14 +408,17 @@ namespace awsiotsdk {
                                     val.SetString(SHADOW_MYSTATE_VALUE_BLUE);
                                     payload = "{\"state\": \"blue\"}";
 					// set light to blue
+					printf("turn light to blue\n");
 					sprintf(cmd_light, "light_control.sh blue");
 					system(cmd_light);
 
                                 } else if (currentState.compare(SHADOW_MYSTATE_VALUE_BLUE_H) == 0) {
                                     val.SetString(SHADOW_MYSTATE_VALUE_BLUE_H);
-                                    payload = "{\"state\": \"blue+h\"}";
+                                    payload = "{\"state\": \"blue+heater\"}";
 					// set light to blue
 					// start heater and stop fan
+					printf("temperature too low, start heater and stop fan\n");
+					printf("turn light to blue\n");
 					sprintf(cmd_light, "light_control.sh blue");
 					system(cmd_light);
 					sprintf(cmd_temp, "temperature -h 1"); //start heater
@@ -417,6 +430,7 @@ namespace awsiotsdk {
                                     val.SetString(SHADOW_MYSTATE_VALUE_GREEN);
                                     payload = "{\"state\": \"green\"}";
 					// set light to green
+					printf("turn light to green\n");
 					sprintf(cmd_light, "light_control.sh green");
 					system(cmd_light);
 
