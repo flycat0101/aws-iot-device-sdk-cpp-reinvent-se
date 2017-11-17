@@ -149,6 +149,7 @@ namespace awsiotsdk {
 #endif
 
             if (!is_lib_initialized) {
+		OPENSSL_config(NULL);
                 OpenSSL_add_all_algorithms();
                 ERR_load_BIO_strings();
                 ERR_load_crypto_strings();
