@@ -1,0 +1,5 @@
+1. Run "setup.sh" to install libarary and configure file.
+2. Copy private key file to "eccKey" directory and save it as "switch-pem.key"
+3. Run dnls_aws.sh, then this private key will be storaged into SE,
+   and reference private key file "switch-pem-ref.key" will be created in "eccKey" directory.
+4. Copy reference key file "switch-pem-ref.key" to greengrass application according directory and save it as private key of device.
