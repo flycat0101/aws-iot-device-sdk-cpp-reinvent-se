@@ -338,7 +338,7 @@ namespace awsiotsdk {
 
 		char cmd[1024];
 		printf("set default target temperature: 300\n");
-		sprintf(cmd, "temperature -w 320:280");
+		sprintf(cmd, "temperature -w 330:270");
 		system(cmd);
 
                 //Sleep for 1 second and wait for all messages to be received
@@ -354,8 +354,8 @@ namespace awsiotsdk {
                     if (rc == ResponseCode::SHADOW_RECEIVED_DELTA) {
                         receivedMessage = my_shadow.GetServerDocument();
                         device = util::JsonParser::ToString(receivedMessage);
-//                	std::cout << std::endl << "Receive message ------- " << std::endl << device << std::endl
-//                        	  << std::endl;
+                	std::cout << std::endl << "Receive message ------- " << std::endl << device << std::endl
+                        	  << std::endl;
 
                         if (receivedMessage[SHADOW_DOCUMENT_STATE_KEY][SHADOW_DOCUMENT_DESIRED_KEY].HasMember(STATE_KEY)) {
                             std::string receivedDeltaString =
@@ -382,8 +382,8 @@ namespace awsiotsdk {
 				char cmd_temp[128];
 				memset(cmd_light, 0x00, sizeof(cmd_light));
 				memset(cmd_temp, 0x00, sizeof(cmd_temp));
-                                if (currentState.compare(SHADOW_MYSTATE_VALUE_RED_F) == 0) {
-                                    val.SetString(SHADOW_MYSTATE_VALUE_RED_F);
+                                if (currentState.compare(SHADOW_MYSTATE_VALUE_RED) == 0) {
+                                    val.SetString(SHADOW_MYSTATE_VALUE_RED);
                                     payload = "{\"state\": \"red+fan\"}";
 					// set light to red
 					// stop heater and start fan
@@ -395,7 +395,7 @@ namespace awsiotsdk {
 					system(cmd_temp);
 					sprintf(cmd_temp, "temperature -c 1"); //start fan
 					system(cmd_temp);
-
+/*
                                 } else if (currentState.compare(SHADOW_MYSTATE_VALUE_RED) == 0) {
                                     val.SetString(SHADOW_MYSTATE_VALUE_RED);
                                     payload = "{\"state\": \"red\"}";
@@ -411,9 +411,9 @@ namespace awsiotsdk {
 					printf("turn light to blue\n");
 					sprintf(cmd_light, "light_control.sh blue");
 					system(cmd_light);
-
-                                } else if (currentState.compare(SHADOW_MYSTATE_VALUE_BLUE_H) == 0) {
-                                    val.SetString(SHADOW_MYSTATE_VALUE_BLUE_H);
+*/
+                                } else if (currentState.compare(SHADOW_MYSTATE_VALUE_BLUE) == 0) {
+                                    val.SetString(SHADOW_MYSTATE_VALUE_BLUE);
                                     payload = "{\"state\": \"blue+heater\"}";
 					// set light to blue
 					// start heater and stop fan
@@ -457,7 +457,7 @@ namespace awsiotsdk {
 //					sprintf(cmd_temp, "temp_control.sh %s", currentState.c_str());
 					int temp_i = atoi(currentState.c_str());
 					printf("set target temperature: %d\n", temp_i);
-					sprintf(cmd_temp, "temperature -w %d:%d", (temp_i + 20), (temp_i - 20));
+					sprintf(cmd_temp, "temperature -w %d:%d", (temp_i + 30), (temp_i - 30));
 					system(cmd_temp);
                                 }
 

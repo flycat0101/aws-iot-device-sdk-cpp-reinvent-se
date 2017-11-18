@@ -245,7 +245,7 @@ namespace awsiotsdk {
                 char buf[20];
                 while (true) {
                         FILE *fp;
-			std::this_thread::sleep_for(std::chrono::seconds(3));
+			std::this_thread::sleep_for(std::chrono::seconds(5));
 			char command[256];
 //			sprintf(command, "get_temperature.sh");
 			sprintf(command, "temperature -g");
