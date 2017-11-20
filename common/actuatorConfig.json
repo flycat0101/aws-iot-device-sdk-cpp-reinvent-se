@@ -4,7 +4,7 @@
   "https_port": 443,
   "greengrass_discovery_port": 8443,
   "root_ca_relative_path": "certs/actuator/root-ca.pem",
-  "device_certificate_relative_path": "certs/actuator/iot-ecc-cert-e2fa5220d9.pem",
+  "device_certificate_relative_path": "certs/actuator/iot-ecc-cert-631edf27f8.pem",
   "device_private_key_relative_path": "certs/actuator/iot-ecc-ref.key",
   "tls_handshake_timeout_msecs": 60000,
   "tls_read_timeout_msecs": 2000,
